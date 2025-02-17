@@ -332,7 +332,7 @@ Programming
 
 A computer engineer is tasked with creating a program for a digital circuit factory. The program should be able to separate 0s on the left side and 1s on the right side of an array of 0s and 1s in a random order. Assume yourself as an engineer and complete your task.
 
-Explanation
+
 import java.util.*;
 public class Main {
 	public static void main(String[] args)
