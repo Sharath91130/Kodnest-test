@@ -503,3 +503,273 @@ public class Main {
     }
 }
 
+# code 8
+
+Programming
+Even and Odd Game
+
+In the enchanted forest of Arraya, a skilled ranger named Ramu and his companion, Raju, discovered a mysterious chest filled with magical gems, each inscribed with a number. The gems were in a disarrayed sequence. A riddle on the chest read: "To unlock the chest's magic, shift the gems so all with even numbers align to the left, while those with odd numbers gather to the right." Ramu and Raju knew they must reorder the gems to solve the riddle. Now your task is to automate there work and help them.
+
+Sample Test Case:
+
+Sample Input:
+
+6
+2 3 4 1 5 7
+Expected Output:
+
+[2, 4, 3, 1, 5, 7]
+
+import java.util.*;
+
+public class Main {
+
+     private static void sortEvensAndOdds(int[] array) {
+        int left = 0;
+        int right = array.length - 1;
+
+        while (left < right) {
+            // If the left element is even, no need to swap, just move to the next
+            if (array[left] % 2 == 0) {
+                left++;
+            } 
+            // If the right element is odd, no need to swap, just move to the previous
+            else if (array[right] % 2 != 0) {
+                right--;
+            } 
+            // If left is odd and right is even, swap them
+            else {
+                int temp = array[left];
+                array[left] = array[right];
+                array[right] = temp;
+                left++;
+                right--;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Read the size of the array
+        int size = scanner.nextInt();
+        int[] array = new int[size];
+
+        // Read the elements of the array
+        for (int i = 0; i < size; i++) {
+            array[i] = scanner.nextInt();
+        }
+
+        // Sort array with even numbers on left and odd numbers on right
+        sortEvensAndOdds(array);
+
+        // Output the sorted array
+        System.out.println(Arrays.toString(array));
+    }
+
+   
+}
+
+
+# code 9
+
+Programming
+Nested Data Structure Manipulation
+
+In a thriving tech park in Hyderabad, a data scientist named Rahul is analyzing hierarchical organizational structures stored as nested arrays. His challenge now has additional complexity:
+
+Flatten the nested array into a single-level array.
+
+Group numbers that are multiples of k into subarrays, with remaining numbers in a separate subarray.
+
+Reconstruct the original hierarchy, but with the elements sorted in ascending order while retaining the same nested structure as input.
+
+Sample Test Case:
+
+Sample Input:
+
+[1, [3], 4]
+2
+Expected Output:
+
+Flattened: [1, 3, 4]
+Grouped: [[4], [1, 3]]
+Reconstructed: [[1, [3], 4]]
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // Input
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine(); // Read nested array as string
+        int k = sc.nextInt(); // Read k
+
+        // Parse nested array
+        List<?> nestedArray = parseNestedArray(input);
+
+        // Step 1: Flatten the array
+        List<Integer> flattened = new ArrayList<>();
+        flattenArray(nestedArray, flattened);
+        System.out.println("Flattened: " + flattened);
+
+        // Step 2: Group by multiples of k
+        List<Integer> multiples = new ArrayList<>();
+        List<Integer> nonMultiples = new ArrayList<>();
+        for (int num : flattened) {
+            if (num % k == 0) {
+                multiples.add(num);
+            } else {
+                nonMultiples.add(num);
+            }
+        }
+        System.out.println("Grouped: [" + multiples + ", " + nonMultiples + "]");
+
+        // Step 3: Sort and reconstruct
+        Collections.sort(flattened);
+        List<?> reconstructed = reconstructArray(nestedArray, flattened.iterator());
+        System.out.println("Reconstructed: " + reconstructed);
+    }
+
+    // Helper to parse a nested array from a string
+    public static List<?> parseNestedArray(String input) {
+        List<Object> result = new ArrayList<>();
+        Stack<List<Object>> stack = new Stack<>();
+        stack.push(result);
+        StringBuilder numBuffer = new StringBuilder();
+
+        for (char ch : input.toCharArray()) {
+            if (ch == '[') {
+                List<Object> newList = new ArrayList<>();
+                stack.peek().add(newList);
+                stack.push(newList);
+            } else if (ch == ']') {
+                if (numBuffer.length() > 0) {
+                    stack.peek().add(Integer.parseInt(numBuffer.toString()));
+                    numBuffer.setLength(0);
+                }
+                stack.pop();
+            } else if (Character.isDigit(ch)) {
+                numBuffer.append(ch);
+            } else if (ch == ',' || ch == ' ') {
+                if (numBuffer.length() > 0) {
+                    stack.peek().add(Integer.parseInt(numBuffer.toString()));
+                    numBuffer.setLength(0);
+                }
+            }
+        }
+        return result;
+    }
+
+    // Helper to flatten a nested array
+    public static void flattenArray(List<?> nested, List<Integer> flatList) {
+        for (Object item : nested) {
+            if (item instanceof Integer) {
+                flatList.add((Integer) item);
+            } else if (item instanceof List<?>) {
+                flattenArray((List<?>) item, flatList);
+            }
+        }
+    }
+
+    // Helper to reconstruct nested array using sorted elements
+    public static List<?> reconstructArray(List<?> nested, Iterator<Integer> sorted) {
+        List<Object> result = new ArrayList<>();
+        for (Object item : nested) {
+            if (item instanceof Integer) {
+                result.add(sorted.next());
+            } else if (item instanceof List<?>) {
+                result.add(reconstructArray((List<?>) item, sorted));
+            }
+        }
+        return result;
+    }
+}
+
+# code 10
+Programming
+Data Transformation Challenge
+
+You are tasked with processing and transforming a mixed dataset of numbers and strings for a research project. The dataset is initially stored as an array, and you must perform a series of transformations on it.
+
+The operations include:
+
+Sorting: Separate the numbers and strings, sort them individually, and then combine them back into a single array (strings followed by numbers).
+
+Reversing: Reverse the combined array.
+
+Concatenation: Concatenate all strings and numbers into a single string with a delimiter "-".
+
+Array to LinkedList: Convert the final array into a LinkedList and display the elements.
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Input as a single line of comma-separated elements
+        String input = sc.nextLine();
+
+        // Split the input string by commas and trim whitespace
+        String[] inputArray = input.split(",");
+        Object[] mixedArray = new Object[inputArray.length];
+
+        for (int i = 0; i < inputArray.length; i++) {
+            String element = inputArray[i].trim();
+            try {
+                // Attempt to parse as integer
+                mixedArray[i] = Integer.parseInt(element);
+            } catch (NumberFormatException e) {
+                // If parsing fails, treat as string
+                mixedArray[i] = element;
+            }
+        }
+
+        // Step 1: Separate strings and numbers and sort them individually
+        List<String> stringList = new ArrayList<>();
+        List<Integer> numberList = new ArrayList<>();
+
+        for (Object element : mixedArray) {
+            if (element instanceof String) {
+                stringList.add((String) element);
+            } else if (element instanceof Integer) {
+                numberList.add((Integer) element);
+            }
+        }
+
+        Collections.sort(stringList); // Sort strings alphabetically
+        Collections.sort(numberList); // Sort numbers in ascending order
+
+        // Combine strings and numbers back into a single array
+        List<Object> sortedList = new ArrayList<>();
+        sortedList.addAll(stringList);
+        sortedList.addAll(numberList);
+
+        Object[] sortedArray = sortedList.toArray();
+        System.out.println("Step 1: Sorted Array: " + Arrays.toString(sortedArray));
+
+        // Step 2: Reverse the array
+        List<Object> reversedList = Arrays.asList(sortedArray);
+        Collections.reverse(reversedList);
+        Object[] reversedArray = reversedList.toArray();
+        System.out.println("Step 2: Reversed Array: " + Arrays.toString(reversedArray));
+
+        // Step 3: Concatenate all elements into a single string with a delimiter "-"
+        StringBuilder concatenatedString = new StringBuilder();
+        for (int i = 0; i < reversedArray.length; i++) {
+            concatenatedString.append(reversedArray[i]);
+            if (i < reversedArray.length - 1) {
+                concatenatedString.append("-");
+            }
+        }
+        System.out.println("Step 3: Concatenated String: " + concatenatedString);
+
+        // Step 4: Convert the final array into a LinkedList and display the elements
+        LinkedList<Object> linkedList = new LinkedList<>(Arrays.asList(reversedArray));
+        System.out.println("Step 4: LinkedList: " + linkedList);
+    }
+}
+
+
+
