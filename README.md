@@ -14,6 +14,9 @@ Expected Output:
 
 [[2, 4], [9], Rahul2isgood]
 
+
+```
+
 import java.util.*;
 
 public class Main {
@@ -72,7 +75,7 @@ public class Main {
         System.out.println(result);
     }
 }
-
+```
 
 # code 2
 
