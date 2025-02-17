@@ -452,3 +452,54 @@ public class Main {
 }
 
 
+# code 7
+Programming
+Find missing letters
+
+In a household, a mother is engaging with her 2.5-year-old child, teaching them the alphabet. The mother provides the child with a set of alphabet letters which child treats as range of letters on which task should be done. Child has to arrange the missing letters in ascending order.
+
+Sample Test Case:
+
+Sample Input:
+
+hello
+Expected Output:
+
+Missing Characters: [f, g, i, j, k, m, n]
+
+import java.util.*;
+public class Main {
+    public static List<Character> findMissingChars(char[] array) {
+        List<Character> missingChars = new ArrayList<>();
+
+        if (array.length == 0) {
+            System.out.println("Array is empty");
+            return missingChars;
+        }
+
+        // Sort the array
+        Arrays.sort(array);
+
+        char start = array[0];
+        char end = array[array.length - 1];
+
+        for (char ch = start; ch <= end; ch++) {
+            if (Arrays.binarySearch(array, ch) < 0) {
+                missingChars.add(ch);
+            }
+        }
+
+        return missingChars;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine();
+        
+        char[] charArray = input.toCharArray();
+        List<Character> missingChars = findMissingChars(charArray);
+
+        System.out.println("Missing Characters: " + missingChars);
+    }
+}
+
