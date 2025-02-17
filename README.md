@@ -217,4 +217,161 @@ public class Main {
         }
     }
 
+}   
+
+# code 4
+
+Programming
+Multi-Level Data Transformation
+
+You are tasked with developing a multi-functional application for managing and analyzing data at a logistics company. The dataset(user input) includes both strings (representing product names) and numbers (representing quantities). The operations required are as follows:
+
+Separate and Sort: Separate the dataset(user input) into two arrays: one for strings and another for numbers. Sort the strings alphabetically and numbers in descending order.
+
+Search: Implement two search functionalities:
+
+A binary search to find the position of a given product name in the sorted string array.
+
+A linear search to find the closest smaller number to a given target in the sorted numeric array.
+
+Reverse and Combine: Reverse the sorted string array and the numeric array. Then merge them alternately into a single linked list (e.g., the first string, the first number, the second string, the second number, and so on).
+
+Recursive Transformation: Transform the merged linked list into a stack, where elements are added in reverse order (i.e., the last element becomes the first in the stack).
+
+Calculate Total Quantities: Calculate the sum of all numbers in the stack.
+
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Input the dataset
+        String[] inputArray = sc.nextLine().split(",\\s*");
+        List<String> stringList = new ArrayList<>();
+        List<Integer> numberList = new ArrayList<>();
+
+        // Separate strings and numbers
+        for (String element : inputArray) {
+            try {
+                numberList.add(Integer.parseInt(element));
+            } catch (NumberFormatException e) {
+                stringList.add(element);
+            }
+        }
+
+        // Sort strings alphabetically and numbers in descending order
+        Collections.sort(stringList);
+        numberList.sort(Collections.reverseOrder());
+
+        System.out.println("1. Sorted Strings: " + stringList);
+        System.out.println("   Sorted Numbers: " + numberList);
+
+        // Search functionality
+        String searchProduct = sc.nextLine();
+        int target = sc.nextInt();
+
+        // Binary search for the product name
+        int productIndex = Collections.binarySearch(stringList, searchProduct);
+        System.out.println("2. Search:");
+        System.out.println("   - " + searchProduct + ": " + (productIndex >= 0 ? "Found at index " + productIndex : "Not found"));
+
+        // Linear search for closest smaller number
+        int closestSmaller = -1;
+        for (int num : numberList) {
+            if (num < target) {
+                closestSmaller = num;
+                break;
+            }
+        }
+        System.out.println("   - Closest smaller number to " + target + ": " + (closestSmaller != -1 ? closestSmaller : "No smaller number found"));
+
+        // Reverse and combine into a linked list
+        Collections.reverse(stringList);
+        Collections.reverse(numberList);
+        LinkedList<Object> combinedList = new LinkedList<>();
+        int maxSize = Math.max(stringList.size(), numberList.size());
+
+        for (int i = 0; i < maxSize; i++) {
+            if (i < stringList.size()) combinedList.add(stringList.get(i));
+            if (i < numberList.size()) combinedList.add(numberList.get(i));
+        }
+
+        System.out.println("3. Reversed and Combined: " + combinedList);
+
+        // Recursive transformation to stack
+        Stack<Object> stack = new Stack<>();
+        populateStack(combinedList, stack);
+        System.out.println("4. Recursive Stack: " + stack);
+
+        // Calculate total quantity using recursion
+        int totalQuantity = calculateSum(stack);
+        System.out.println("5. Total Quantity: " + totalQuantity);
+    }
+
+    // Recursively populate the stack
+    public static void populateStack(LinkedList<Object> list, Stack<Object> stack) {
+        if (list.isEmpty()) return;
+        stack.push(list.removeLast());
+        populateStack(list, stack);
+    }
+
+    // Recursively calculate the sum of numbers in the stack
+    public static int calculateSum(Stack<Object> stack) {
+        if (stack.isEmpty()) return 0;
+        Object element = stack.pop();
+        int sum = (element instanceof Integer) ? (int) element : 0;
+        return sum + calculateSum(stack);
+    }
 }
+
+# code 5
+Programming
+0’s and 1’s Game
+
+A computer engineer is tasked with creating a program for a digital circuit factory. The program should be able to separate 0s on the left side and 1s on the right side of an array of 0s and 1s in a random order. Assume yourself as an engineer and complete your task.
+
+Explanation
+import java.util.*;
+public class Main {
+	public static void main(String[] args)
+    {
+		Scanner scan = new Scanner(System.in);
+		int n = scan.nextInt();
+		int arr[] = new int[n];
+		for(int i=0;i<=arr.length-1;i++)
+		{
+			int in = scan.nextInt();
+			if(in==0 || in==1)
+			{
+				arr[i]=in;
+			}
+			else
+			{
+				System.out.println("Invalid code");
+				return;
+			}
+		}
+        int result[];
+        result = separate0and1(arr, n);
+        System.out.println("circuit code");
+        System.out.println(Arrays.toString(result));
+    }   
+    static int [] separate0and1(int arr[], int n)
+    {
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+        if (arr[i] == 0)
+            count++;
+        }
+        for (int i = 0; i < count; i++)
+            arr[i] = 0;
+        for (int i = count; i < n; i++)
+            arr[i] = 1;
+        return arr;
+
+    }
+}
+
+
