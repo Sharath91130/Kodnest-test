@@ -181,6 +181,61 @@ public class Main {
 }
 ```
 
+# code 4
+
+Programming
+Unique letters
+
+Question Description:
+You're a software engineer tasked with creating a function for a new text analysis tool. This function needs to identify and return only the unique letters from a given string, disregarding any repeated characters. Your algorithm should efficiently parse through the string and ensure accuracy, even with longer and more complex inputs.
+
+Sample Test Case:
+
+Sample Input:
+
+bdbdac
+Expected Output:
+
+[a, c]
+
+
+
+```
+import java.util.*;
+
+class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        List<Character> ans = findUniqueCharacters(s);
+        System.out.println(ans);
+        sc.close();
+    }
+
+    public static List<Character> findUniqueCharacters(String s) {
+        Map<Character, Integer> freq = new HashMap<>();
+        List<Character> unique = new ArrayList<>();
+
+        // Count frequency of each character
+        for (char c : s.toCharArray()) {
+            if (Character.isLetter(c)) {
+                freq.put(c, freq.getOrDefault(c, 0) + 1);
+            }
+        }
+
+        // Find unique characters (frequency == 1)
+        for (char c : s.toCharArray()) {
+            if (Character.isLetter(c) && freq.get(c) == 1) {
+                unique.add(c);
+            }
+        }
+
+        return unique;
+    }
+}
+```
+
+
 
 
 
