@@ -17,9 +17,7 @@ Expected Output:
 import java.util.*;
 
 public class Main {
-
-    // Method to process the data
-    public static List<Object> processData(List<Object> data) {
+ public static List<Object> processData(List<Object> data) {
         List<Integer> evenNumbers = new ArrayList<>();
         List<Integer> oddNumbers = new ArrayList<>();
         StringBuilder concatenatedStrings = new StringBuilder();
