@@ -374,3 +374,81 @@ public class Main {
 }
 
 
+# code 6
+
+Programming
+Largest two numbers
+
+Every day, your brother takes money from your wallet. If you have less than two notes, he leaves a 500 rupee note in your wallet. If you have two or more notes, he takes the two notes with the highest denomination. Calculate the total amount of money he has taken from you.
+
+Explanation
+
+import java.util.*;
+
+public class Main {
+
+    public static int findAmount(int[] arr) {
+
+        if (arr == null || arr.length < 2) {
+
+            return 0;
+
+        }
+
+        int note1 = Integer.MIN_VALUE;
+
+        int note2 = Integer.MIN_VALUE;
+
+        for (int value : arr) {
+
+            if (value > note1) {
+
+                note2 = note1;  // Update second max
+
+                note1 = value; // Update max
+
+            } else if (value > note2 && value != note1) {
+
+                note2 = value;
+
+            }
+
+        } 
+
+        return note1+note2;
+
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        int arr[] = new int[n];
+
+        for (int i = 0; i < arr.length; i++) {
+
+            arr[i] = sc.nextInt();
+
+        }
+
+        int money = findAmount(arr);
+
+        if (money==0){
+
+            System.out.println("Your brother has kept $500 in your wallet");
+
+        }
+
+        else{
+
+            System.out.println("Bro i have taken $"+money);
+
+        }
+
+    }
+
+}
+
+
